@@ -36,6 +36,15 @@ new class extends Component {
     {
         $this->editing = null;
     }
+
+    public function delete(Chirp $chirp): void
+    {
+        $this->authorize('delete', $chirp);
+
+        $chirp->delete();
+
+        $this->getChirps();
+    }
 };
 
 ?>
@@ -87,6 +96,9 @@ new class extends Component {
                             <x-slot name="content">
                                 <x-dropdown-link wire:click="edit({{ $chirp->id }})">
                                     {{ __('Edit') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link wire:click="delete({{ $chirp->id }})">
+                                    {{ __('Delete') }}
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
